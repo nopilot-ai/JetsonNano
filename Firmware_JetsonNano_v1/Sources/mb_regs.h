@@ -28,3 +28,8 @@
 #define mbREG_adc_Wh_jet        27
 #define mbREG_adc_W_bat         28
 #define mbREG_adc_W_jet         29
+#define mbREG_adc_SteerPos      30
+#define mbREG_JoyCorrect        31
+#define mbREG_JoySteer          32
+#define mbREG_JoyAccel          33
+#define mbREG_JoyBoxCap         34

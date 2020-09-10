@@ -81,6 +81,28 @@ void TIM4_IRQHandler(void)
     led_toggle();
     mb.registers.one[mbREG_work_tim_s]++;
   }
+  
+  uint8_t ppmerror = 0;
+  for (uint8_t ch = 0; ch < 3; ch++)
+  {
+    if (inppm.lenght[ch][0] > inppm.lenght[ch][1])
+      inppm.lenght[ch][1] += 2000;
+    uint16_t tmp_ppm = inppm.lenght[ch][1] - inppm.lenght[ch][0];
+    if ((tmp_ppm > 205) || (tmp_ppm < 95) || (tmp_ppm == 0))
+      ppmerror = 1;
+    else
+      inppm.out[ch] = tmp_ppm;
+    inppm.lenght[ch][0] = 0;
+    inppm.lenght[ch][1] = 0;
+  }
+  if ((inppm.out[0] > 149) || (ppmerror > 0))
+  {
+    if (inppm.valid > 0)
+      inppm.valid--;
+  }
+  else
+    inppm.valid = 25;
+    
 }
 
 void DMA1_Channel4_IRQHandler(void)
@@ -91,6 +113,35 @@ void DMA1_Channel4_IRQHandler(void)
   USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
   mb.u16InCnt = 0;
   //led_toggle();
+}
+
+void EXTI15_10_IRQHandler(void)
+{
+  if (EXTI_GetFlagStatus(EXTI_Line10))
+  {
+    EXTI_ClearFlag(EXTI_Line10);
+    if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_10) == 1)
+      inppm.lenght[0][0] = TIM4->CNT;
+    else
+      inppm.lenght[0][1] = TIM4->CNT;
+  }
+  if (EXTI_GetFlagStatus(EXTI_Line11))
+  {
+    EXTI_ClearFlag(EXTI_Line11);
+    if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_11) == 1)
+      inppm.lenght[1][0] = TIM4->CNT;
+    else
+      inppm.lenght[1][1] = TIM4->CNT;
+  }
+  
+  if (EXTI_GetFlagStatus(EXTI_Line12))
+  {
+    EXTI_ClearFlag(EXTI_Line12);
+    if (GPIO_ReadInputDataBit(GPIOB, GPIO_Pin_12) == 1)
+      inppm.lenght[2][0] = TIM4->CNT;
+    else
+      inppm.lenght[2][1] = TIM4->CNT;
+  }
 }
 
 

@@ -19,7 +19,7 @@ void init_gpio(void)
     
   
   //JETSON_RESET 0 is ON
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;
   GPIO_Init(GPIOA, &GPIO_InitStructure);
@@ -157,10 +157,7 @@ void init_modbus(uint32_t speed)
   mb.registers.one[mbREG_PPM_1] = 150;
   mb.registers.one[mbREG_PPM_2] = 150;
   mb.registers.one[mbREG_PPM_3] = 150;
-  mb.registers.one[mbREG_PPM_4] = 150;
-  
-  
-  
+  mb.registers.one[mbREG_PPM_4] = 150; 
   
   DMA_SetCurrDataCounter(DMA1_Channel4, 14);
   DMA_Cmd(DMA1_Channel4, ENABLE);
@@ -179,12 +176,15 @@ void init_adc(void)
   
   RCC_ADCCLKConfig(RCC_CFGR_ADCPRE_DIV8);
   RCC_AHBPeriphClockCmd(RCC_AHBPeriph_DMA1, ENABLE);
-  RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1 | RCC_APB2Periph_GPIOA, ENABLE); 
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1 | RCC_APB2Periph_GPIOA | RCC_APB2Periph_GPIOB, ENABLE); 
   
   //GPIO_StructInit(&GPIO_InitStructure);
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1 | GPIO_Pin_2 | GPIO_Pin_3 | GPIO_Pin_4;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
   GPIO_Init(GPIOA, &GPIO_InitStructure);
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_1;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AIN;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
     
 __IO uint16_t ADCConvertedValue;
   // DMA1 channel1 configuration ----------------------------------------------
@@ -217,7 +217,7 @@ __IO uint16_t ADCConvertedValue;
   ADC_InitStructure.ADC_ContinuousConvMode = ENABLE;
   ADC_InitStructure.ADC_ExternalTrigConv = ADC_ExternalTrigConv_None;
   ADC_InitStructure.ADC_DataAlign = ADC_DataAlign_Right;
-  ADC_InitStructure.ADC_NbrOfChannel = 5;
+  ADC_InitStructure.ADC_NbrOfChannel = 6;
   ADC_Init(ADC1, &ADC_InitStructure);
     
   ADC_RegularChannelConfig(ADC1, ADC_Channel_0, 1, ADC_SampleTime_239Cycles5);
@@ -225,6 +225,7 @@ __IO uint16_t ADCConvertedValue;
   ADC_RegularChannelConfig(ADC1, ADC_Channel_2, 3, ADC_SampleTime_239Cycles5);
   ADC_RegularChannelConfig(ADC1, ADC_Channel_3, 4, ADC_SampleTime_71Cycles5);
   ADC_RegularChannelConfig(ADC1, ADC_Channel_4, 5, ADC_SampleTime_55Cycles5);
+  ADC_RegularChannelConfig(ADC1, ADC_Channel_9, 6, ADC_SampleTime_55Cycles5);
   
   //ADC_ITConfig(ADC1, ADC_IT_EOC, ENABLE);  
   ADC_DMACmd(ADC1 , ENABLE );   
@@ -263,8 +264,7 @@ void init_ppm(void)
   GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
   GPIO_Init(GPIOB, &GPIO_InitStructure);  
-  GPIO_WriteBit(GPIOB, GPIO_Pin_5, !mb.registers.one[mbREG_PPM_PON]);
-  
+  GPIO_WriteBit(GPIOB, GPIO_Pin_5, !mb.registers.one[mbREG_PPM_PON]);  
   
   uint16_t PrescalerValue = (uint16_t) (SystemCoreClock / 100000) - 1;
   TIM_TimeBaseStructure.TIM_Period = 2000;    //(1/speed)/(1/timeout)*4
@@ -298,6 +298,40 @@ void init_ppm(void)
   NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
   NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
   NVIC_Init(&NVIC_InitStructure);  
+  
+  //PPM input
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_15;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+  
+  EXTI_InitTypeDef exti;
+  exti.EXTI_Line = EXTI_Line10;
+  exti.EXTI_Mode = EXTI_Mode_Interrupt;
+  exti.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+  exti.EXTI_LineCmd = ENABLE;
+  EXTI_Init(&exti);
+  GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource10);
+  
+  exti.EXTI_Line = EXTI_Line11;
+  exti.EXTI_Mode = EXTI_Mode_Interrupt;
+  exti.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+  exti.EXTI_LineCmd = ENABLE;
+  EXTI_Init(&exti);
+  GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource11);
+  
+  exti.EXTI_Line = EXTI_Line12;
+  exti.EXTI_Mode = EXTI_Mode_Interrupt;
+  exti.EXTI_Trigger = EXTI_Trigger_Rising_Falling;
+  exti.EXTI_LineCmd = ENABLE;
+  EXTI_Init(&exti);  
+  GPIO_EXTILineConfig(GPIO_PortSourceGPIOB, GPIO_PinSource12);
+  /*//NVIC_EnableIRQ(EXTI15_10_IRQn);  */
+  NVIC_InitStructure.NVIC_IRQChannel = EXTI15_10_IRQn;
+  NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2;
+  NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  NVIC_Init(&NVIC_InitStructure); 
 }
 
 void init_ws2812(void)

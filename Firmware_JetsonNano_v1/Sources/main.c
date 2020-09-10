@@ -26,7 +26,7 @@
 #include "mb_regs.h"
 #include "main.h"
 
-uint16_t adc_end[5];
+uint16_t adc_end[ADC_CH_CNT];
 uint32_t adc_flag = 0;
 uint16_t adc_data[ADC_ARR_LENGT*2][ADC_CH_CNT];
 
@@ -39,7 +39,7 @@ uint32_t timer1hz = 0;
 uint8_t update50hz = 0;
 
 struct adc_math board_va;
-
+struct struct_inppm inppm;
 
 int main(void)
 {
@@ -96,6 +96,7 @@ int main(void)
       board_va.V_jet = board_va.ch[3] * (3.3 / 4096.0) * 11;
       board_va.I_jet = (board_va.ch[2] * (3.3 / 4096.0) - 1.65) / 0.066;
       board_va.V_5v = board_va.ch[4] * (3.3 / 4096.0) * 2;
+      board_va.servo_pos = board_va.ch[5] * (3.3 / 4096.0);
       board_va.W_bat = board_va.I_bat * board_va.V_bat;
       board_va.W_jet = board_va.I_jet * board_va.V_bat;
       board_va.Wh_bat += board_va.W_bat /60/60/ 50;
@@ -108,7 +109,7 @@ int main(void)
       
       GPIO_WriteBit(GPIOC, GPIO_Pin_14, mb.registers.one[mbREG_ALL_PON]);
       GPIO_WriteBit(GPIOA, GPIO_Pin_6, mb.registers.one[mbREG_JETSON_PON]);
-      GPIO_WriteBit(GPIOB, GPIO_Pin_1, mb.registers.one[mbREG_JETSON_ON]);
+      GPIO_WriteBit(GPIOB, GPIO_Pin_2, mb.registers.one[mbREG_JETSON_ON]);
       GPIO_WriteBit(GPIOB, GPIO_Pin_5, !mb.registers.one[mbREG_PPM_PON]);
       if (!mb.registers.one[mbREG_PPM_PON]) //do not on servo is ppm off
         mb.registers.one[mbREG_SRV_PON] = 0;      
@@ -128,9 +129,15 @@ int main(void)
       mb.registers.one[mbREG_adc_Wh_jet] = (uint16_t)(board_va.Wh_jet);
       mb.registers.one[mbREG_adc_W_bat] = (uint16_t)(board_va.W_bat*1000);
       mb.registers.one[mbREG_adc_W_jet] = (uint16_t)(board_va.W_jet*1000);
+      mb.registers.one[mbREG_adc_SteerPos] = (uint16_t)(board_va.servo_pos*1000);
       
       mb.registers.one[mbREG_button] = !GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_15);
       mb.registers.one[mbREG_jetson_usb] = GPIO_ReadInputDataBit(GPIOA, GPIO_Pin_15);
+      
+      mb.registers.one[mbREG_JoyCorrect] = inppm.valid;
+      mb.registers.one[mbREG_JoySteer  ] = inppm.out[0];
+      mb.registers.one[mbREG_JoyAccel  ] = inppm.out[1];
+      mb.registers.one[mbREG_JoyBoxCap ] = inppm.out[2];
       
       
       mb.registers.one[mbREG_mb_timeout] = mb.u16timeOut;

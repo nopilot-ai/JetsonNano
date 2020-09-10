@@ -1,6 +1,6 @@
 
-#define ADC_CH_CNT 5
-#define ADC_ARR_LENGT 199
+#define ADC_CH_CNT 6
+#define ADC_ARR_LENGT 240
 
 
 extern uint32_t adc_flag;
@@ -25,4 +25,14 @@ struct adc_math
   float Wh_jet;
   float W_bat;
   float W_jet;
+  float servo_pos;
 };
+
+struct struct_inppm
+{
+  uint16_t valid;
+  uint16_t out[3];
+  uint16_t lenght[3][2];
+};
+
+extern struct struct_inppm inppm;
