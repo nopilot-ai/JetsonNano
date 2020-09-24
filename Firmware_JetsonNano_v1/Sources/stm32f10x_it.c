@@ -73,6 +73,7 @@ void TIM4_IRQHandler(void)
   
   if ((timer50hz % 50) == 0) 
   {
+    BoardBackTimer();
     timer1hz++;
     if (toggle50hz) 
       toggle50hz = 0;

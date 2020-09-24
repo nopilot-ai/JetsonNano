@@ -60,11 +60,21 @@ void init_gpio(void)
   GPIO_Init(GPIOC, &GPIO_InitStructure);
   GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_15); 
   
+  //power to jetson nano connector PB13
+  //signal to jetson  PB2
+  GPIOB->BSRR |= GPIO_BSRR_BS13 | GPIO_BSRR_BS2;   
+  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_13 | GPIO_Pin_2;
+  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_2MHz;
+  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_OD;
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+  
   mb.registers.one[mbREG_ALL_PON] = 1;
-  mb.registers.one[mbREG_JETSON_PON] = 1;
-  mb.registers.one[mbREG_JETSON_ON] = 1;
+  mb.registers.one[mbREG_5VDC_PON] = 1;
+  mb.registers.one[mbREG_JETSON_ON] = 0;
+  mb.registers.one[mbREG_JETSON_SOFF] = 0;
   mb.registers.one[mbREG_PPM_PON] = 0;
   mb.registers.one[mbREG_SRV_PON] = 0;
+  mb.registers.one[mbREG_back_timer] = 3;
 }
 
 

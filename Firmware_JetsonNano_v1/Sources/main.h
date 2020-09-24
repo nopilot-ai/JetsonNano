@@ -7,6 +7,8 @@ extern uint32_t adc_flag;
 extern uint16_t adc_data[ADC_ARR_LENGT*2][ADC_CH_CNT];
 void led_toggle(void);
 void init_ws2812(void);
+void PowerLogic(void);
+uint32_t BoardBackTimer(void);
 
 extern uint32_t toggle50hz;
 extern uint32_t timer50hz;

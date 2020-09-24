@@ -45,7 +45,9 @@ int main(void)
 {
   PWR->CR |= PWR_CR_PLS_0 | PWR_CR_PLS_1 | PWR_CR_PLS_2;
   PWR->CR |= PWR_CR_PVDE;
-  while(PWR->CSR & PWR_CSR_PVDO);
+  while(PWR->CSR & PWR_CSR_PVDO);  
+  RCC->APB2ENR |= RCC_APB2ENR_AFIOEN;
+  AFIO->MAPR |= AFIO_MAPR_SWJ_CFG_JTAGDISABLE;
   SystemInit();
   //init_sysclk();
   //IWDG_WriteAccessCmd(IWDG_WriteAccess_Enable);
@@ -66,6 +68,9 @@ int main(void)
   while (1)
   {
     IWDG_ReloadCounter(); 
+    
+    PowerLogic();
+    
     if(mb.flag & 0x01)
     {
       mb.flag &=~ 1;
@@ -108,8 +113,9 @@ int main(void)
       update50hz = toggle50hz;      
       
       GPIO_WriteBit(GPIOC, GPIO_Pin_14, mb.registers.one[mbREG_ALL_PON]);
-      GPIO_WriteBit(GPIOA, GPIO_Pin_6, mb.registers.one[mbREG_JETSON_PON]);
-      GPIO_WriteBit(GPIOB, GPIO_Pin_2, mb.registers.one[mbREG_JETSON_ON]);
+      GPIO_WriteBit(GPIOA, GPIO_Pin_6, mb.registers.one[mbREG_5VDC_PON]);
+      GPIO_WriteBit(GPIOB, GPIO_Pin_13, !mb.registers.one[mbREG_JETSON_ON]);
+      GPIO_WriteBit(GPIOB, GPIO_Pin_2,!mb.registers.one[mbREG_JETSON_SOFF]);
       GPIO_WriteBit(GPIOB, GPIO_Pin_5, !mb.registers.one[mbREG_PPM_PON]);
       if (!mb.registers.one[mbREG_PPM_PON]) //do not on servo is ppm off
         mb.registers.one[mbREG_SRV_PON] = 0;      
@@ -170,8 +176,8 @@ int main(void)
       led_loop();
     }
     
-    if (mb.registers.one[mbREG_button_cmd] == 2)
-       mb.registers.one[mbREG_ALL_PON] = 0;
+    //if (mb.registers.one[mbREG_button_cmd] == 2)
+    //   mb.registers.one[mbREG_ALL_PON] = 0;
   }
 }
 
