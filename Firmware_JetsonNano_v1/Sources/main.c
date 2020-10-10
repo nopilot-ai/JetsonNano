@@ -41,6 +41,8 @@ uint8_t update50hz = 0;
 struct adc_math board_va;
 struct struct_inppm inppm;
 
+
+uint16_t DriveSourceOld = 0;
 int main(void)
 {
   PWR->CR |= PWR_CR_PLS_0 | PWR_CR_PLS_1 | PWR_CR_PLS_2;
@@ -65,6 +67,7 @@ int main(void)
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
   GPIO_Init(GPIOA, &GPIO_InitStructure);*/
+  mb.registers.one[mbREG_LedState] = 4; //1-4 led blink red
   while (1)
   {
     IWDG_ReloadCounter(); 
@@ -145,9 +148,12 @@ int main(void)
       mb.registers.one[mbREG_JoyAccel  ] = inppm.out[1];
       mb.registers.one[mbREG_JoyBoxCap ] = inppm.out[2];
       
-      
+     
+      mb.u16timeOut++;
       mb.registers.one[mbREG_mb_timeout] = mb.u16timeOut;
       mb.u16time++;
+     
+      
       
       if (!GPIO_ReadInputDataBit(GPIOC, GPIO_Pin_15))   //button function
       {
@@ -159,11 +165,13 @@ int main(void)
         if (buttonStateTimer > 125)
         {
           mb.registers.one[mbREG_button_cmd] = 2;
+          mb.registers.one[mbREG_LedState] = 8;//all led red
           buttonStateTimer = 0;
         }
         else if (buttonStateTimer > 20)
         {          
-          mb.registers.one[mbREG_button_cmd] = 1;
+          mb.registers.one[mbREG_button_cmd] = 1;          
+          mb.registers.one[mbREG_LedState] = 7;//red round blink
           buttonStateTimer = 0;
         }
         else
@@ -171,9 +179,28 @@ int main(void)
           if (buttonStateTimer)
              buttonStateTimer--;
         }
-      }    
+      }   
       
-      led_loop();
+      if ((mb.registers.one[mbREG_mb_timeout] > 150) &&  (mb.registers.one[mbREG_LedState] < 4))  //button function
+      {
+        mb.registers.one[mbREG_PPM_1] = 150;
+        mb.registers.one[mbREG_PPM_2] = 150;
+        mb.registers.one[mbREG_PPM_3] = 150;
+        mb.registers.one[mbREG_PPM_4] = 150;
+        mb.registers.one[mbREG_LedState] = 9;
+      }
+      if ((mb.registers.one[mbREG_mb_timeout] < 100) &&  (mb.registers.one[mbREG_LedState] == 9))
+        mb.registers.one[mbREG_LedState] = 0;
+      
+      if (mb.registers.one[mbREG_LedState] < 4) 
+      {
+        if (DriveSourceOld != mb.registers.one[mbREG_ControlSource])
+        {
+          mb.registers.one[mbREG_LedState] = mb.registers.one[mbREG_ControlSource];
+          DriveSourceOld = mb.registers.one[mbREG_ControlSource];
+        }
+      }
+      led_loop(mb.registers.one[mbREG_LedState]);
     }
     
     //if (mb.registers.one[mbREG_button_cmd] == 2)

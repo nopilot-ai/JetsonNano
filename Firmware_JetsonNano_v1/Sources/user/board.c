@@ -10,6 +10,18 @@ void PowerStart(void)
 uint32_t GoOnStep = 0;
 void PowerLogic(void)
 {
+  if ((mb.registers.one[mbREG_LedState] == 4) && (mb.registers.one[mbREG_JETSON_ON] > 0))
+    mb.registers.one[mbREG_LedState] = 5;//5-8 led blink red
+  if ((mb.registers.one[mbREG_LedState] == 5) && (mb.registers.one[mbREG_jetson_usb] > 0))
+  {
+    mb.registers.one[mbREG_LedState] = 6;//9-12 led blink red    
+    mb.u16timeOut = 80;
+    mb.registers.one[mbREG_mb_timeout] = mb.u16timeOut;
+  }
+  if ((mb.registers.one[mbREG_LedState] == 6) && (mb.registers.one[mbREG_mb_timeout] < 50))
+    mb.registers.one[mbREG_LedState] = 0; //yellow round
+    
+  
   switch(BaordState)
   {
     case GO_ON:      
@@ -17,7 +29,7 @@ void PowerLogic(void)
       {
         if (mb.registers.one[mbREG_adc_Vbat] < 9000) 
         {
-          mb.registers.one[mbREG_back_timer] = 3;
+          mb.registers.one[mbREG_back_timer] = 5;
           mb.registers.one[mbREG_shutdown] = 1;  
           mb.registers.one[mbREG_PPM_PON] = 0;
           mb.registers.one[mbREG_SRV_PON] = 0;  
@@ -48,7 +60,8 @@ void PowerLogic(void)
           mb.registers.one[mbREG_shutdown] = 1; 
           mb.registers.one[mbREG_JETSON_SOFF] = 1;
           mb.registers.one[mbREG_PPM_PON] = 0;
-          mb.registers.one[mbREG_SRV_PON] = 0; 
+          mb.registers.one[mbREG_SRV_PON] = 0;
+          mb.registers.one[mbREG_LedState] = 7;//red round blink
           BaordState = GO_OFF;
         }
         else if (mb.registers.one[mbREG_button_cmd] == 2)       //hard off all board
@@ -62,12 +75,13 @@ void PowerLogic(void)
       //if ()
       break;
     case GO_OFF:
-      if (mb.registers.one[mbREG_jetson_usb] == 0)
+      if ((mb.registers.one[mbREG_jetson_usb] == 0) || (mb.registers.one[mbREG_button_cmd] == 2) || (mb.registers.one[mbREG_back_timer] == 0))
       {
         //mb.registers.one[mbREG_JETSON_ON] = 0;
         mb.registers.one[mbREG_JETSON_SOFF] = 1;
         mb.registers.one[mbREG_5VDC_PON] = 0;
-        mb.registers.one[mbREG_back_timer] = 3;         
+        mb.registers.one[mbREG_back_timer] = 3;     
+        mb.registers.one[mbREG_LedState] = 8;//all light red
         BaordState = BRD_OFF;
       }
       break;

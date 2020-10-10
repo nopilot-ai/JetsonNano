@@ -74,7 +74,7 @@ void init_gpio(void)
   mb.registers.one[mbREG_JETSON_SOFF] = 0;
   mb.registers.one[mbREG_PPM_PON] = 0;
   mb.registers.one[mbREG_SRV_PON] = 0;
-  mb.registers.one[mbREG_back_timer] = 3;
+  mb.registers.one[mbREG_back_timer] = 4;
 }
 
 

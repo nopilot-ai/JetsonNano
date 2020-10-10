@@ -12,7 +12,8 @@
 #define mbREG_back_timer        9
 #define mbREG_AI_on             10
 #define mbREG_JETSON_SOFF       11
-
+#define mbREG_ControlSource     12
+#define mbREG_LedState          13
 
 #define mbREG_button_cmd        15
 #define mbREG_shutdown          16

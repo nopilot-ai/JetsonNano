@@ -4,7 +4,7 @@
 #define ARRAY_LEN DELAY_LEN + LED_COUNT*24
 
 void led_wheel(uint8_t led, uint8_t r ,uint8_t g, uint8_t b);
-void led_loop(void);
+void led_loop(uint8_t type);
 
 extern uint16_t led_ws2812[ARRAY_LEN];
 extern const uint16_t led_pwm[128][8];

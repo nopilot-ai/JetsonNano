@@ -1,0 +1,817 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html">
+<style type="text/css">
+		h1, h2, h3, h4, h5, h6 {
+			font-family : segoe ui;
+			color : black;
+			background-color : #EDE7D9;
+			padding: 0.3em;
+		}
+
+		h1 {
+			font-size: 1.2em;
+		}		
+
+		h2 {
+			font-size: 1.2em;
+		}
+
+		body {
+			font-family : segoe ui;
+		}
+
+		td, th {
+			padding: 0.5em;
+			text-align : left;
+			width: 10em;
+		}
+		th {
+			background-color : #EEEEEE;
+
+		}
+		th.column1, td.column1 {
+			text-align: left;
+			width : auto;
+		}
+		table {
+			width : 100%;
+			font-size: 0.9em;
+		}
+
+		.DRC_summary_header {
+			padding-bottom : 0.1em;
+			border : 0px solid black;
+			width: 100%;
+			align: left;
+		}
+
+		.DRC_summary_header_col1,
+		.DRC_summary_header_col2, 
+		.DRC_summary_header_col3 {
+			color : black;
+			font-size:100%;
+			padding : 0em;
+			padding-top : 0.2em;
+			padding-bottom 0.2em;
+			border : 0px solid black;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.DRC_summary_header_col1 {
+			font-weight: bold;
+			width: 8em;
+		}
+
+		.DRC_summary_header_col2 {
+			width: 0.1em;
+		
+		}
+
+		.DRC_summary_header_col3 {
+			width : auto;
+		}
+
+		.header_holder {
+		    Width = 100%;
+		    border = 0px solid green;
+		    padding = 0;
+		}
+
+
+		.front_matter, .front_matter_column1, .front_matter_column2, .front_matter_column3
+		{
+			left : 0;
+			top : 0;
+			padding: 0em;
+			padding-top : 0.1em;
+			border : 0px solid black;
+			width : 100%;
+			vertical-align: top;
+			text-align: left;
+		}
+
+		.front_matter_column1 {
+			width : 8em;
+			font-weight: bold;
+		}
+
+		.front_matter_column2 {
+			width: 0.1em;
+		}
+
+		.front_matter_column3 {
+			width : auto;
+		}
+
+		.total_column1, .total_column {
+			font-weight : bold;
+		}
+		.total_column1 {
+			text-align : left;
+		}
+		.warning, .error {
+			color : red;
+			font-weight : bold;
+		}
+		tr.onmouseout_odd {
+			background-color : #white;
+		}
+		tr.onmouseout_even { 
+			background-color : #FAFAFA;
+		}
+		tr.onmouseover_odd, tr.onmouseover_even { 
+			background-color : #EEEEEE;
+		} 
+		a:link, a:visited, .q a:link,.q a:active,.q {
+			color: #21489e; 
+		}
+		a:link.callback, a:visited.callback { 
+			color: #21489e;
+		}
+		a:link.customize, a:visited.customize {
+			color: #C0C0C0;
+			position: absolute; 
+			right: 10px;
+		}	
+		p.contents_level1 {
+			font-weight : bold;
+			font-size : 110%;
+			margin : 0.5em;
+		}
+		p.contents_level2 {
+			position : relative;
+			left : 20px;
+			margin : 0.5em;
+		}
+	</style><script type="text/javascript">
+		function coordToMils(coord) {
+			var number = coord / 10000;
+			
+			if (number != number.toFixed(3))
+				number = number.toFixed(3);
+
+			return number + 'mil'
+		}
+
+		function coordToMM(coord) {
+			var number = 0.0254 * coord / 10000;
+			
+			if (number != number.toFixed(4))
+				number = number.toFixed(4);
+			
+			return number + 'mm'
+		}
+	
+		function convertCoord(coordNode, units) {
+			for (var i = 0; i < coordNode.childNodes.length; i++) {
+				coordNode.removeChild(coordNode.childNodes[i]);
+			}
+
+			var coord = coordNode.getAttribute('value');
+			if (coord != null) {
+				if (units == 'mm') {
+					textNode = document.createTextNode(coordToMM(coord));
+					coordNode.appendChild(textNode);
+				} else if (units == 'mil') {
+					textNode = document.createTextNode(coordToMils(coord));		
+					coordNode.appendChild(textNode);	
+				}
+			}
+		}
+	
+		function convertUnits(unitNode, units) {
+			for (var i = 0; i < unitNode.childNodes.length; i++) {
+				unitNode.removeChild(unitNode.childNodes[i]);		
+			}
+		
+			textNode = document.createTextNode(units); 
+			unitNode.appendChild(textNode);
+		}
+	
+		function changeUnits(radio_input, units) {
+			if (radio_input.checked) {
+			
+				var elements = document.getElementsByName('coordinate');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertCoord(elements[i], units);
+					}
+				}
+	
+				var elements = document.getElementsByName('units');
+				if (elements) {
+					for (var i = 0; i < elements.length; i++) {
+						convertUnits(elements[i], units);
+					}
+				}
+			}
+		}
+	</script><title>Design Rule Verification Report</title>
+</head>
+<body onload=""><img ALT="Altium" src="
+			file://C:\Users\Public\Documents\Altium\AD16\Templates\AD_logo.png
+		"><h1>Design Rule Verification Report</h1>
+<table class="header_holder">
+<td class="column1">
+<table class="front_matter">
+<tr class="front_matter">
+<td class="front_matter_column1">Date:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">04.10.2020</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">21:33:59</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Elapsed Time:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3">00:00:05</td>
+</tr>
+<tr class="front_matter">
+<td class="front_matter_column1">Filename:</td>
+<td class="front_matter_column2"></td>
+<td class="front_matter_column3"><a href="file:///E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc" class="file"><acronym title="E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc">E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc</acronym></a></td>
+</tr>
+</table>
+</td>
+<td class="column2">
+<table class="DRC_summary_header">
+<tr>
+<td class="DRC_summary_header_col1">Warnings:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3">0</td></tr>
+<tr>
+<td class="DRC_summary_header_col1">Rule Violations:</td>
+<td class="DRC_summary_header_col2"></td>
+<td class="DRC_summary_header_col3" style="color : red">163</td></tr>
+</table>
+</td>
+</table><a name="IDMBDCIDMSCQAPJ2I0RP3MUMRK3IMGOBRYGTPFF4P0IGERAQ5JLUW"><h2>Summary</h2></a><table>
+<tr>
+<th class="column1">Warnings</th>
+<th class="column2">Count</th>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">0</td>
+</tr>
+</table><br><table>
+<tr>
+<th class="column1">Rule Violations</th>
+<th class="column2">Count</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#ID3D0LKLZD41XKMFVAPUFEUZTSDMJECX4ONYNQVEEIUJKBK05UAWYO">Board Clearance Constraint (Gap=0mm) (All)</a></td>
+<td class="column2">23</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDFK105AAQXOFQMRKEFZ2DRA2IZOX1LRJDDXE44ELTGM4C2MZYYFII">Short-Circuit Constraint (Allowed=No) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDMSNN0YELPDSJMFXFBML1W02BRIHJNXC4ASIRBSLDPTKETU0FPNK">Un-Routed Net Constraint ( (All) )</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDMVLVDEGAEJJ1JQOK4QFBKUD0AMSO0LZ4ETVFQMI2HEZZMERUBFPB">Clearance Constraint (Gap=0.2mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDYPBLTGB2HWWWKT2BSGKUYK4XINNNPCVHCY402WJ5LLCDPXW32NYB">Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#ID3YFD1QBAHIX0UJR0PZUKKXA2H2OPMQSD5SHZLH2JOWMYLDH011M">Width Constraint (Min=0.2mm) (Max=4mm) (Preferred=0.2mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDNAFTUNTTYPCDHV4F4XBS4XNY2L11S4XICQLUBIJN2DMFDRPRHUQH">Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDHGHT5RFKIJXVNKL454FWNV1VGJMKCNSK1CKGIKOQ5LWJE25LJECB">Hole Size Constraint (Min=0.025mm) (Max=5mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDDPLWG2NTZXIDGPF2TJFAVH2PHKHH5VQFWD3GIUIB5CLKASWJJTSB">Hole To Hole Clearance (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDT0CXVGPUMRZ0P3S5KQDH4GNVNH5RYSVUN0OCCRFGXLSABG22CO4E">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</a></td>
+<td class="column2">140</td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="#IDXBZZSXSOETWYGVUT3FZ3TNBR2PLRW4NKIERF3FJ3R1452LJ1AXSM">Net Antennae (Tolerance=0mm) (All)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="#IDVAN1T5EKJZD2NYDFNMG3JYWD5PWWVEWLV2Z3RHI4HRE4ERXRJU4">Modified Polygon (Allow modified: No), (Allow shelved: No)</a></td>
+<td class="column2">0</td>
+</tr>
+<tr>
+<td style="font-weight : bold; text-align : right" class="column1">Total</td>
+<td style="font-weight : bold" class="column2">163</td>
+</tr>
+</table><br><a name="ID3D0LKLZD41XKMFVAPUFEUZTSDMJECX4ONYNQVEEIUJKBK05UAWYO"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Board Clearance Constraint (Gap=0mm) (All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5825.01mil|Location2.X=5832.676mil|Location1.Y=5747.393mil|Location2.Y=5755.06mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5825.01mil|Location2.X=5832.676mil|Location1.Y=5747.393mil|Location2.Y=5755.06mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Pad C37-2(32.7mm,38.8mm) on Top Layer And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5825.013mil|Location2.X=5832.68mil|Location1.Y=5668.647mil|Location2.Y=5676.314mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5825.013mil|Location2.X=5832.68mil|Location1.Y=5668.647mil|Location2.Y=5676.314mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Pad C37-1(32.7mm,36.8mm) on Top Layer And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5831.959mil|Location2.X=5839.626mil|Location1.Y=5637.151mil|Location2.Y=5644.818mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5831.959mil|Location2.X=5839.626mil|Location1.Y=5637.151mil|Location2.Y=5644.818mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Track (31.7mm,36mm)(33.7mm,36mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5855.419mil|Location2.X=5863.085mil|Location1.Y=5708.017mil|Location2.Y=5715.684mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5855.419mil|Location2.X=5863.085mil|Location1.Y=5708.017mil|Location2.Y=5715.684mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Track (33.7mm,36mm)(33.7mm,39.6mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5831.959mil|Location2.X=5839.626mil|Location1.Y=5778.883mil|Location2.Y=5786.55mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5831.959mil|Location2.X=5839.626mil|Location1.Y=5778.883mil|Location2.Y=5786.55mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Track (31.7mm,39.6mm)(33.7mm,39.6mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3739.454mil|Location2.X=3750.704mil|Location1.Y=7314.493mil|Location2.Y=7325.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3739.454mil|Location2.X=3750.704mil|Location1.Y=7314.493mil|Location2.Y=7325.743mil|Absolute=True">Board Outline Clearance(Outline Edge): (0.1mm &lt; 0.254mm) Between Track (-20mm,61.1mm)(-20mm,78.5mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4188.273mil|Location2.X=4199.523mil|Location1.Y=7314.493mil|Location2.Y=7325.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4188.273mil|Location2.X=4199.523mil|Location1.Y=7314.493mil|Location2.Y=7325.743mil|Absolute=True">Board Outline Clearance(Outline Edge): (0.1mm &lt; 0.254mm) Between Track (-8.6mm,61.1mm)(-8.6mm,78.5mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3739.454mil|Location2.X=3750.704mil|Location1.Y=7314.493mil|Location2.Y=7325.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3739.454mil|Location2.X=3750.704mil|Location1.Y=7314.493mil|Location2.Y=7325.743mil|Absolute=True">Board Outline Clearance(Outline Edge): (0.1mm &lt; 0.254mm) Between Track (-20mm,78.5mm)(-8.6mm,78.5mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4243.391mil|Location2.X=4254.641mil|Location1.Y=7314.493mil|Location2.Y=7325.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4243.391mil|Location2.X=4254.641mil|Location1.Y=7314.493mil|Location2.Y=7325.743mil|Absolute=True">Board Outline Clearance(Outline Edge): (0.1mm &lt; 0.254mm) Between Track (-7.2mm,66.5mm)(-7.2mm,78.5mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4243.391mil|Location2.X=4254.641mil|Location1.Y=7314.493mil|Location2.Y=7325.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4243.391mil|Location2.X=4254.641mil|Location1.Y=7314.493mil|Location2.Y=7325.743mil|Absolute=True">Board Outline Clearance(Outline Edge): (0.1mm &lt; 0.254mm) Between Track (-7.2mm,78.5mm)(6.4mm,78.5mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4778.824mil|Location2.X=4790.074mil|Location1.Y=7314.493mil|Location2.Y=7325.743mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4778.824mil|Location2.X=4790.074mil|Location1.Y=7314.493mil|Location2.Y=7325.743mil|Absolute=True">Board Outline Clearance(Outline Edge): (0.1mm &lt; 0.254mm) Between Track (6.4mm,66.5mm)(6.4mm,78.5mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5806.942mil|Location2.X=5814.609mil|Location1.Y=4557.233mil|Location2.Y=4564.9mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5806.942mil|Location2.X=5814.609mil|Location1.Y=4557.233mil|Location2.Y=4564.9mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Track (26.6mm,8.57mm)(32.4mm,8.57mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5806.942mil|Location2.X=5814.609mil|Location1.Y=4807.233mil|Location2.Y=4814.9mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5806.942mil|Location2.X=5814.609mil|Location1.Y=4807.233mil|Location2.Y=4814.9mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Track (32.4mm,8.57mm)(32.4mm,21.27mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5806.942mil|Location2.X=5814.609mil|Location1.Y=5057.233mil|Location2.Y=5064.9mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5806.942mil|Location2.X=5814.609mil|Location1.Y=5057.233mil|Location2.Y=5064.9mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Track (26.6mm,21.27mm)(32.4mm,21.27mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3528.647mil|Location2.X=3536.314mil|Location1.Y=4383.051mil|Location2.Y=4390.718mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3528.647mil|Location2.X=3536.314mil|Location1.Y=4383.051mil|Location2.Y=4390.718mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Track (-25.4mm,0mm)(-25.4mm,8.4mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4528.746mil|Location2.X=4536.413mil|Location1.Y=4219.828mil|Location2.Y=4227.495mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4528.746mil|Location2.X=4536.413mil|Location1.Y=4219.828mil|Location2.Y=4227.495mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Track (-25.4mm,0mm)(25.405mm,0mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5528.845mil|Location2.X=5536.512mil|Location1.Y=4383.051mil|Location2.Y=4390.718mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5528.845mil|Location2.X=5536.512mil|Location1.Y=4383.051mil|Location2.Y=4390.718mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Track (25.405mm,0mm)(25.405mm,8.4mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4528.746mil|Location2.X=4536.413mil|Location1.Y=4548.406mil|Location2.Y=4556.072mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4528.746mil|Location2.X=4536.413mil|Location1.Y=4548.406mil|Location2.Y=4556.072mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Track (-25.4mm,8.4mm)(25.405mm,8.4mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5878.515mil|Location2.X=5886.182mil|Location1.Y=5842.842mil|Location2.Y=5850.509mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5878.515mil|Location2.X=5886.182mil|Location1.Y=5842.842mil|Location2.Y=5850.509mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Text "C37" (31.857mm,40.463mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5830.21mil|Location2.X=5837.876mil|Location1.Y=5409.771mil|Location2.Y=5417.438mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5830.21mil|Location2.X=5837.876mil|Location1.Y=5409.771mil|Location2.Y=5417.438mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Text "C13" (29.657mm,29.463mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3797.497mil|Location2.X=3805.164mil|Location1.Y=7374.149mil|Location2.Y=7381.816mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3797.497mil|Location2.X=3805.164mil|Location1.Y=7374.149mil|Location2.Y=7381.816mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Text "D6" (-19.841mm,79.358mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4291.5mil|Location2.X=4299.167mil|Location1.Y=7374.149mil|Location2.Y=7381.816mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4291.5mil|Location2.X=4299.167mil|Location1.Y=7374.149mil|Location2.Y=7381.816mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Text "L1" (-7.039mm,79.358mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2824.973mil|Location2.X=2832.639mil|Location1.Y=7331.054mil|Location2.Y=7338.72mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=2824.973mil|Location2.X=2832.639mil|Location1.Y=7331.054mil|Location2.Y=7338.72mil|Absolute=True">Board Outline Clearance(Outline Edge): (Collision &lt; 0.254mm) Between Text "P1" (-44.289mm,77.582mm) on Top Overlay And Board Edge </acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br><a name="IDT0CXVGPUMRZ0P3S5KQDH4GNVNH5RYSVUN0OCCRFGXLSABG22CO4E"><table>
+<tr>
+<th style="text-align : left" colspan="1" class="rule">Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)</th>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5455.926mil|Location2.X=5467.176mil|Location1.Y=5362.525mil|Location2.Y=5373.775mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5455.926mil|Location2.X=5467.176mil|Location1.Y=5362.525mil|Location2.Y=5373.775mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.237mm &lt; 0.254mm) Between Pad D5-4(24.55mm,29.59mm) on Top Layer And Pad C25-1(24mm,28.3mm) on Top Layer [Top Solder] Mask Sliver [0.237mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5702.285mil|Location2.Y=5713.535mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5702.285mil|Location2.Y=5713.535mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-47(-2.05mm,37.45mm) on Top Layer And Pad U1-48(-2.05mm,37.95mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5682.6mil|Location2.Y=5693.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5682.6mil|Location2.Y=5693.85mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-46(-2.05mm,36.95mm) on Top Layer And Pad U1-47(-2.05mm,37.45mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5662.915mil|Location2.Y=5674.165mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5662.915mil|Location2.Y=5674.165mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-45(-2.05mm,36.45mm) on Top Layer And Pad U1-46(-2.05mm,36.95mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5643.23mil|Location2.Y=5654.48mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5643.23mil|Location2.Y=5654.48mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-44(-2.05mm,35.95mm) on Top Layer And Pad U1-45(-2.05mm,36.45mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5623.545mil|Location2.Y=5634.795mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5623.545mil|Location2.Y=5634.795mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-43(-2.05mm,35.45mm) on Top Layer And Pad U1-44(-2.05mm,35.95mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5603.86mil|Location2.Y=5615.11mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5603.86mil|Location2.Y=5615.11mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-42(-2.05mm,34.95mm) on Top Layer And Pad U1-43(-2.05mm,35.45mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5584.175mil|Location2.Y=5595.425mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5584.175mil|Location2.Y=5595.425mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-41(-2.05mm,34.45mm) on Top Layer And Pad U1-42(-2.05mm,34.95mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5564.49mil|Location2.Y=5575.74mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5564.49mil|Location2.Y=5575.74mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-40(-2.05mm,33.95mm) on Top Layer And Pad U1-41(-2.05mm,34.45mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5544.805mil|Location2.Y=5556.055mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5544.805mil|Location2.Y=5556.055mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-39(-2.05mm,33.45mm) on Top Layer And Pad U1-40(-2.05mm,33.95mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5525.12mil|Location2.Y=5536.37mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5525.12mil|Location2.Y=5536.37mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-38(-2.05mm,32.95mm) on Top Layer And Pad U1-39(-2.05mm,33.45mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5505.435mil|Location2.Y=5516.685mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4427.449mil|Location2.X=4438.699mil|Location1.Y=5505.435mil|Location2.Y=5516.685mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-37(-2.05mm,32.45mm) on Top Layer And Pad U1-38(-2.05mm,32.95mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4369.378mil|Location2.X=4380.628mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4369.378mil|Location2.X=4380.628mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-35(-4.25mm,30.75mm) on Top Layer And Pad U1-36(-3.75mm,30.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4349.693mil|Location2.X=4360.943mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4349.693mil|Location2.X=4360.943mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-34(-4.75mm,30.75mm) on Top Layer And Pad U1-35(-4.25mm,30.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4330.008mil|Location2.X=4341.258mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4330.008mil|Location2.X=4341.258mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-33(-5.25mm,30.75mm) on Top Layer And Pad U1-34(-4.75mm,30.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4310.323mil|Location2.X=4321.573mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4310.323mil|Location2.X=4321.573mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-32(-5.75mm,30.75mm) on Top Layer And Pad U1-33(-5.25mm,30.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4290.638mil|Location2.X=4301.888mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4290.638mil|Location2.X=4301.888mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-31(-6.25mm,30.75mm) on Top Layer And Pad U1-32(-5.75mm,30.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4270.953mil|Location2.X=4282.203mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4270.953mil|Location2.X=4282.203mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-30(-6.75mm,30.75mm) on Top Layer And Pad U1-31(-6.25mm,30.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4251.268mil|Location2.X=4262.518mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4251.268mil|Location2.X=4262.518mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-29(-7.25mm,30.75mm) on Top Layer And Pad U1-30(-6.75mm,30.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4231.583mil|Location2.X=4242.833mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4231.583mil|Location2.X=4242.833mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-28(-7.75mm,30.75mm) on Top Layer And Pad U1-29(-7.25mm,30.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4211.898mil|Location2.X=4223.148mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4211.898mil|Location2.X=4223.148mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-27(-8.25mm,30.75mm) on Top Layer And Pad U1-28(-7.75mm,30.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4192.213mil|Location2.X=4203.463mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4192.213mil|Location2.X=4203.463mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-26(-8.75mm,30.75mm) on Top Layer And Pad U1-27(-8.25mm,30.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4172.528mil|Location2.X=4183.778mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4172.528mil|Location2.X=4183.778mil|Location1.Y=5409.962mil|Location2.Y=5421.212mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-25(-9.25mm,30.75mm) on Top Layer And Pad U1-26(-8.75mm,30.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5505.435mil|Location2.Y=5516.685mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5505.435mil|Location2.Y=5516.685mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-23(-10.95mm,32.95mm) on Top Layer And Pad U1-24(-10.95mm,32.45mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5525.12mil|Location2.Y=5536.37mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5525.12mil|Location2.Y=5536.37mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-22(-10.95mm,33.45mm) on Top Layer And Pad U1-23(-10.95mm,32.95mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5544.805mil|Location2.Y=5556.055mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5544.805mil|Location2.Y=5556.055mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-21(-10.95mm,33.95mm) on Top Layer And Pad U1-22(-10.95mm,33.45mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5564.49mil|Location2.Y=5575.74mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5564.49mil|Location2.Y=5575.74mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-20(-10.95mm,34.45mm) on Top Layer And Pad U1-21(-10.95mm,33.95mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5584.175mil|Location2.Y=5595.425mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5584.175mil|Location2.Y=5595.425mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-19(-10.95mm,34.95mm) on Top Layer And Pad U1-20(-10.95mm,34.45mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5603.86mil|Location2.Y=5615.11mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5603.86mil|Location2.Y=5615.11mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-18(-10.95mm,35.45mm) on Top Layer And Pad U1-19(-10.95mm,34.95mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5623.545mil|Location2.Y=5634.795mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5623.545mil|Location2.Y=5634.795mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-17(-10.95mm,35.95mm) on Top Layer And Pad U1-18(-10.95mm,35.45mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5643.23mil|Location2.Y=5654.48mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5643.23mil|Location2.Y=5654.48mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-16(-10.95mm,36.45mm) on Top Layer And Pad U1-17(-10.95mm,35.95mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5662.915mil|Location2.Y=5674.165mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5662.915mil|Location2.Y=5674.165mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-15(-10.95mm,36.95mm) on Top Layer And Pad U1-16(-10.95mm,36.45mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5682.6mil|Location2.Y=5693.85mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5682.6mil|Location2.Y=5693.85mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-14(-10.95mm,37.45mm) on Top Layer And Pad U1-15(-10.95mm,36.95mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5702.285mil|Location2.Y=5713.535mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4077.055mil|Location2.X=4088.305mil|Location1.Y=5702.285mil|Location2.Y=5713.535mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-13(-10.95mm,37.95mm) on Top Layer And Pad U1-14(-10.95mm,37.45mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4172.528mil|Location2.X=4183.778mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4172.528mil|Location2.X=4183.778mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-11(-8.75mm,39.65mm) on Top Layer And Pad U1-12(-9.25mm,39.65mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4192.213mil|Location2.X=4203.463mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4192.213mil|Location2.X=4203.463mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-10(-8.25mm,39.65mm) on Top Layer And Pad U1-11(-8.75mm,39.65mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4211.898mil|Location2.X=4223.148mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4211.898mil|Location2.X=4223.148mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-9(-7.75mm,39.65mm) on Top Layer And Pad U1-10(-8.25mm,39.65mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4231.583mil|Location2.X=4242.833mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4231.583mil|Location2.X=4242.833mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-8(-7.25mm,39.65mm) on Top Layer And Pad U1-9(-7.75mm,39.65mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4251.268mil|Location2.X=4262.518mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4251.268mil|Location2.X=4262.518mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-7(-6.75mm,39.65mm) on Top Layer And Pad U1-8(-7.25mm,39.65mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4270.953mil|Location2.X=4282.203mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4270.953mil|Location2.X=4282.203mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-6(-6.25mm,39.65mm) on Top Layer And Pad U1-7(-6.75mm,39.65mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4290.638mil|Location2.X=4301.888mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4290.638mil|Location2.X=4301.888mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-5(-5.75mm,39.65mm) on Top Layer And Pad U1-6(-6.25mm,39.65mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4310.323mil|Location2.X=4321.573mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4310.323mil|Location2.X=4321.573mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-4(-5.25mm,39.65mm) on Top Layer And Pad U1-5(-5.75mm,39.65mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4330.008mil|Location2.X=4341.258mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4330.008mil|Location2.X=4341.258mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-3(-4.75mm,39.65mm) on Top Layer And Pad U1-4(-5.25mm,39.65mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4349.693mil|Location2.X=4360.943mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4349.693mil|Location2.X=4360.943mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-2(-4.25mm,39.65mm) on Top Layer And Pad U1-3(-4.75mm,39.65mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4369.378mil|Location2.X=4380.628mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4369.378mil|Location2.X=4380.628mil|Location1.Y=5760.356mil|Location2.Y=5771.606mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad U1-1(-3.75mm,39.65mm) on Top Layer And Pad U1-2(-4.25mm,39.65mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3406.285mil|Location2.X=3417.535mil|Location1.Y=6524.139mil|Location2.Y=6535.389mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3406.285mil|Location2.X=3417.535mil|Location1.Y=6524.139mil|Location2.Y=6535.389mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.222mm &lt; 0.254mm) Between Pad R24-2(-27.5mm,58.3mm) on Top Layer And Pad VT4-1(-29.15mm,58.45mm) on Top Layer [Top Solder] Mask Sliver [0.222mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3406.285mil|Location2.X=3417.535mil|Location1.Y=6602.879mil|Location2.Y=6614.129mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3406.285mil|Location2.X=3417.535mil|Location1.Y=6602.879mil|Location2.Y=6614.129mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.222mm &lt; 0.254mm) Between Pad R24-1(-27.5mm,60.3mm) on Top Layer And Pad VT4-2(-29.15mm,60.35mm) on Top Layer [Top Solder] Mask Sliver [0.222mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4145.95mil|Location2.X=4157.2mil|Location1.Y=6453.765mil|Location2.Y=6465.015mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4145.95mil|Location2.X=4157.2mil|Location1.Y=6453.765mil|Location2.Y=6465.015mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.122mm &lt; 0.254mm) Between Pad VT1-2(-9.35mm,56.15mm) on Top Layer And Pad R19-1(-9.4mm,57.7mm) on Top Layer [Top Solder] Mask Sliver [0.122mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4224.69mil|Location2.X=4235.94mil|Location1.Y=6453.765mil|Location2.Y=6465.015mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4224.69mil|Location2.X=4235.94mil|Location1.Y=6453.765mil|Location2.Y=6465.015mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.122mm &lt; 0.254mm) Between Pad VT1-1(-7.45mm,56.15mm) on Top Layer And Pad R19-2(-7.4mm,57.7mm) on Top Layer [Top Solder] Mask Sliver [0.122mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5515.496mil|Location2.X=5526.746mil|Location1.Y=5973.58mil|Location2.Y=5984.83mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5515.496mil|Location2.X=5526.746mil|Location1.Y=5973.58mil|Location2.Y=5984.83mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.168mm &lt; 0.254mm) Between Pad XT1-G(25.42mm,46.4mm) on Multi-Layer And Pad C23-2(24.893mm,43.607mm) on Top Layer [Top Solder] Mask Sliver [0.168mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5307.367mil|Location2.X=5318.617mil|Location1.Y=4782.013mil|Location2.Y=4793.263mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5307.367mil|Location2.X=5318.617mil|Location1.Y=4782.013mil|Location2.Y=4793.263mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.147mm &lt; 0.254mm) Between Pad D2-2(20.05mm,15mm) on Top Layer And Pad R4-1(20.1mm,13.4mm) on Top Layer [Top Solder] Mask Sliver [0.147mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5296.401mil|Location2.X=5308.123mil|Location1.Y=4780.771mil|Location2.Y=4792.021mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5296.401mil|Location2.X=5308.123mil|Location1.Y=4780.771mil|Location2.Y=4792.021mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.252mm &lt; 0.254mm) Between Pad D2-1(19.1mm,15mm) on Top Layer And Pad R4-1(20.1mm,13.4mm) on Top Layer [Top Solder] Mask Sliver [0.252mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5337.089mil|Location2.X=5350.555mil|Location1.Y=4781.297mil|Location2.Y=4792.547mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5337.089mil|Location2.X=5350.555mil|Location1.Y=4781.297mil|Location2.Y=4792.547mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.203mm &lt; 0.254mm) Between Pad D2-3(21mm,15mm) on Top Layer And Pad R4-1(20.1mm,13.4mm) on Top Layer [Top Solder] Mask Sliver [0.203mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5261.247mil|Location2.X=5274.021mil|Location1.Y=4780.771mil|Location2.Y=4792.021mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5261.247mil|Location2.X=5274.021mil|Location1.Y=4780.771mil|Location2.Y=4792.021mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.252mm &lt; 0.254mm) Between Pad D2-1(19.1mm,15mm) on Top Layer And Pad R4-2(18.1mm,13.4mm) on Top Layer [Top Solder] Mask Sliver [0.252mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5468.785mil|Location2.X=5480.035mil|Location1.Y=4784.902mil|Location2.Y=4796.152mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5468.785mil|Location2.X=5480.035mil|Location1.Y=4784.902mil|Location2.Y=4796.152mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad D3-2(23.45mm,15mm) on Top Layer And Pad D3-3(24.4mm,15mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5431.383mil|Location2.X=5442.633mil|Location1.Y=4784.903mil|Location2.Y=4796.153mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5431.383mil|Location2.X=5442.633mil|Location1.Y=4784.903mil|Location2.Y=4796.153mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad D3-1(22.5mm,15mm) on Top Layer And Pad D3-2(23.45mm,15mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5213.866mil|Location2.X=5225.116mil|Location1.Y=5634.372mil|Location2.Y=5645.622mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5213.866mil|Location2.X=5225.116mil|Location1.Y=5634.372mil|Location2.Y=5645.622mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad C9-2(18.4mm,35.7mm) on Top Layer And Pad R1-1(16.5mm,35.7mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5213.863mil|Location2.X=5225.113mil|Location1.Y=5713.115mil|Location2.Y=5724.365mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5213.863mil|Location2.X=5225.113mil|Location1.Y=5713.115mil|Location2.Y=5724.365mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad C9-1(18.4mm,37.7mm) on Top Layer And Pad R1-2(16.5mm,37.7mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5334.926mil|Location2.X=5346.176mil|Location1.Y=4784.902mil|Location2.Y=4796.152mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5334.926mil|Location2.X=5346.176mil|Location1.Y=4784.902mil|Location2.Y=4796.152mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad D2-2(20.05mm,15mm) on Top Layer And Pad D2-3(21mm,15mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5297.525mil|Location2.X=5308.775mil|Location1.Y=4784.903mil|Location2.Y=4796.153mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5297.525mil|Location2.X=5308.775mil|Location1.Y=4784.903mil|Location2.Y=4796.153mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.197mm &lt; 0.254mm) Between Pad D2-1(19.1mm,15mm) on Top Layer And Pad D2-2(20.05mm,15mm) on Top Layer [Top Solder] Mask Sliver [0.197mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5418.824mil|Location2.Y=5430.074mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5418.824mil|Location2.Y=5430.074mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-63(20.525mm,30.25mm) on Top Layer And Pad D1-64(20.525mm,30.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5399.139mil|Location2.Y=5410.389mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5399.139mil|Location2.Y=5410.389mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-62(20.525mm,29.75mm) on Top Layer And Pad D1-63(20.525mm,30.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5379.454mil|Location2.Y=5390.704mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5379.454mil|Location2.Y=5390.704mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-61(20.525mm,29.25mm) on Top Layer And Pad D1-62(20.525mm,29.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5359.769mil|Location2.Y=5371.019mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5359.769mil|Location2.Y=5371.019mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-60(20.525mm,28.75mm) on Top Layer And Pad D1-61(20.525mm,29.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5340.084mil|Location2.Y=5351.334mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5340.084mil|Location2.Y=5351.334mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-59(20.525mm,28.25mm) on Top Layer And Pad D1-60(20.525mm,28.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5320.399mil|Location2.Y=5331.649mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5320.399mil|Location2.Y=5331.649mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-58(20.525mm,27.75mm) on Top Layer And Pad D1-59(20.525mm,28.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5300.714mil|Location2.Y=5311.964mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5300.714mil|Location2.Y=5311.964mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-57(20.525mm,27.25mm) on Top Layer And Pad D1-58(20.525mm,27.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5281.029mil|Location2.Y=5292.279mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5281.029mil|Location2.Y=5292.279mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-56(20.525mm,26.75mm) on Top Layer And Pad D1-57(20.525mm,27.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5261.344mil|Location2.Y=5272.594mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5261.344mil|Location2.Y=5272.594mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-55(20.525mm,26.25mm) on Top Layer And Pad D1-56(20.525mm,26.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5241.659mil|Location2.Y=5252.909mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5241.659mil|Location2.Y=5252.909mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-54(20.525mm,25.75mm) on Top Layer And Pad D1-55(20.525mm,26.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5221.974mil|Location2.Y=5233.224mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5221.974mil|Location2.Y=5233.224mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-53(20.525mm,25.25mm) on Top Layer And Pad D1-54(20.525mm,25.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5202.288mil|Location2.Y=5213.538mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5202.288mil|Location2.Y=5213.538mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-52(20.525mm,24.75mm) on Top Layer And Pad D1-53(20.525mm,25.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5182.604mil|Location2.Y=5193.854mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5182.604mil|Location2.Y=5193.854mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-51(20.525mm,24.25mm) on Top Layer And Pad D1-52(20.525mm,24.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5162.918mil|Location2.Y=5174.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5162.918mil|Location2.Y=5174.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-50(20.525mm,23.75mm) on Top Layer And Pad D1-51(20.525mm,24.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5143.233mil|Location2.Y=5154.483mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5309.336mil|Location2.X=5320.586mil|Location1.Y=5143.233mil|Location2.Y=5154.483mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-49(20.525mm,23.25mm) on Top Layer And Pad D1-50(20.525mm,23.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5255.202mil|Location2.X=5266.452mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5255.202mil|Location2.X=5266.452mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-47(18.25mm,21.475mm) on Top Layer And Pad D1-48(18.75mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5235.517mil|Location2.X=5246.767mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5235.517mil|Location2.X=5246.767mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-46(17.75mm,21.475mm) on Top Layer And Pad D1-47(18.25mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5215.832mil|Location2.X=5227.082mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5215.832mil|Location2.X=5227.082mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-45(17.25mm,21.475mm) on Top Layer And Pad D1-46(17.75mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5196.147mil|Location2.X=5207.397mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5196.147mil|Location2.X=5207.397mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-44(16.75mm,21.475mm) on Top Layer And Pad D1-45(17.25mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5176.462mil|Location2.X=5187.712mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5176.462mil|Location2.X=5187.712mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-43(16.25mm,21.475mm) on Top Layer And Pad D1-44(16.75mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5156.777mil|Location2.X=5168.027mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5156.777mil|Location2.X=5168.027mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-42(15.75mm,21.475mm) on Top Layer And Pad D1-43(16.25mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5137.092mil|Location2.X=5148.342mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5137.092mil|Location2.X=5148.342mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-41(15.25mm,21.475mm) on Top Layer And Pad D1-42(15.75mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5117.407mil|Location2.X=5128.657mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5117.407mil|Location2.X=5128.657mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-40(14.75mm,21.475mm) on Top Layer And Pad D1-41(15.25mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5097.721mil|Location2.X=5108.971mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5097.721mil|Location2.X=5108.971mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-39(14.25mm,21.475mm) on Top Layer And Pad D1-40(14.75mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5078.036mil|Location2.X=5089.286mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5078.036mil|Location2.X=5089.286mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-38(13.75mm,21.475mm) on Top Layer And Pad D1-39(14.25mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5058.351mil|Location2.X=5069.601mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5058.351mil|Location2.X=5069.601mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-37(13.25mm,21.475mm) on Top Layer And Pad D1-38(13.75mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5038.666mil|Location2.X=5049.916mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5038.666mil|Location2.X=5049.916mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-36(12.75mm,21.475mm) on Top Layer And Pad D1-37(13.25mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5018.981mil|Location2.X=5030.231mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5018.981mil|Location2.X=5030.231mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-35(12.25mm,21.475mm) on Top Layer And Pad D1-36(12.75mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4999.296mil|Location2.X=5010.546mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4999.296mil|Location2.X=5010.546mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-34(11.75mm,21.475mm) on Top Layer And Pad D1-35(12.25mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4979.611mil|Location2.X=4990.861mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4979.611mil|Location2.X=4990.861mil|Location1.Y=5037.918mil|Location2.Y=5049.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-33(11.25mm,21.475mm) on Top Layer And Pad D1-34(11.75mm,21.475mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5143.233mil|Location2.Y=5154.483mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5143.233mil|Location2.Y=5154.483mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-31(9.475mm,23.75mm) on Top Layer And Pad D1-32(9.475mm,23.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5162.918mil|Location2.Y=5174.168mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5162.918mil|Location2.Y=5174.168mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-30(9.475mm,24.25mm) on Top Layer And Pad D1-31(9.475mm,23.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5182.604mil|Location2.Y=5193.854mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5182.604mil|Location2.Y=5193.854mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-29(9.475mm,24.75mm) on Top Layer And Pad D1-30(9.475mm,24.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5202.288mil|Location2.Y=5213.538mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5202.288mil|Location2.Y=5213.538mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-28(9.475mm,25.25mm) on Top Layer And Pad D1-29(9.475mm,24.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5221.974mil|Location2.Y=5233.224mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5221.974mil|Location2.Y=5233.224mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-27(9.475mm,25.75mm) on Top Layer And Pad D1-28(9.475mm,25.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5241.659mil|Location2.Y=5252.909mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5241.659mil|Location2.Y=5252.909mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-26(9.475mm,26.25mm) on Top Layer And Pad D1-27(9.475mm,25.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5261.344mil|Location2.Y=5272.594mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5261.344mil|Location2.Y=5272.594mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-25(9.475mm,26.75mm) on Top Layer And Pad D1-26(9.475mm,26.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5281.029mil|Location2.Y=5292.279mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5281.029mil|Location2.Y=5292.279mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-24(9.475mm,27.25mm) on Top Layer And Pad D1-25(9.475mm,26.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5300.714mil|Location2.Y=5311.964mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5300.714mil|Location2.Y=5311.964mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-23(9.475mm,27.75mm) on Top Layer And Pad D1-24(9.475mm,27.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5320.399mil|Location2.Y=5331.649mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5320.399mil|Location2.Y=5331.649mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-22(9.475mm,28.25mm) on Top Layer And Pad D1-23(9.475mm,27.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5340.084mil|Location2.Y=5351.334mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5340.084mil|Location2.Y=5351.334mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-21(9.475mm,28.75mm) on Top Layer And Pad D1-22(9.475mm,28.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5359.769mil|Location2.Y=5371.019mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5359.769mil|Location2.Y=5371.019mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-20(9.475mm,29.25mm) on Top Layer And Pad D1-21(9.475mm,28.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5379.454mil|Location2.Y=5390.704mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5379.454mil|Location2.Y=5390.704mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-19(9.475mm,29.75mm) on Top Layer And Pad D1-20(9.475mm,29.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5399.139mil|Location2.Y=5410.389mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5399.139mil|Location2.Y=5410.389mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-18(9.475mm,30.25mm) on Top Layer And Pad D1-19(9.475mm,29.75mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5418.824mil|Location2.Y=5430.074mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4874.296mil|Location2.X=4885.546mil|Location1.Y=5418.824mil|Location2.Y=5430.074mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-17(9.475mm,30.75mm) on Top Layer And Pad D1-18(9.475mm,30.25mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4979.611mil|Location2.X=4990.861mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4979.611mil|Location2.X=4990.861mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-15(11.75mm,32.525mm) on Top Layer And Pad D1-16(11.25mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4999.296mil|Location2.X=5010.546mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=4999.296mil|Location2.X=5010.546mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-14(12.25mm,32.525mm) on Top Layer And Pad D1-15(11.75mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5018.981mil|Location2.X=5030.231mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5018.981mil|Location2.X=5030.231mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-13(12.75mm,32.525mm) on Top Layer And Pad D1-14(12.25mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5038.666mil|Location2.X=5049.916mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5038.666mil|Location2.X=5049.916mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-12(13.25mm,32.525mm) on Top Layer And Pad D1-13(12.75mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5058.351mil|Location2.X=5069.601mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5058.351mil|Location2.X=5069.601mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-11(13.75mm,32.525mm) on Top Layer And Pad D1-12(13.25mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5078.036mil|Location2.X=5089.286mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5078.036mil|Location2.X=5089.286mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-10(14.25mm,32.525mm) on Top Layer And Pad D1-11(13.75mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5097.721mil|Location2.X=5108.971mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5097.721mil|Location2.X=5108.971mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-9(14.75mm,32.525mm) on Top Layer And Pad D1-10(14.25mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5117.407mil|Location2.X=5128.657mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5117.407mil|Location2.X=5128.657mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-8(15.25mm,32.525mm) on Top Layer And Pad D1-9(14.75mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5137.092mil|Location2.X=5148.342mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5137.092mil|Location2.X=5148.342mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-7(15.75mm,32.525mm) on Top Layer And Pad D1-8(15.25mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5156.777mil|Location2.X=5168.027mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5156.777mil|Location2.X=5168.027mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-6(16.25mm,32.525mm) on Top Layer And Pad D1-7(15.75mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5176.462mil|Location2.X=5187.712mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5176.462mil|Location2.X=5187.712mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-5(16.75mm,32.525mm) on Top Layer And Pad D1-6(16.25mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5196.147mil|Location2.X=5207.397mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5196.147mil|Location2.X=5207.397mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-4(17.25mm,32.525mm) on Top Layer And Pad D1-5(16.75mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5215.832mil|Location2.X=5227.082mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5215.832mil|Location2.X=5227.082mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-3(17.75mm,32.525mm) on Top Layer And Pad D1-4(17.25mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5235.517mil|Location2.X=5246.767mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5235.517mil|Location2.X=5246.767mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-2(18.25mm,32.525mm) on Top Layer And Pad D1-3(17.75mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5255.202mil|Location2.X=5266.452mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5255.202mil|Location2.X=5266.452mil|Location1.Y=5472.958mil|Location2.Y=5484.208mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.047mm &lt; 0.254mm) Between Pad D1-1(18.75mm,32.525mm) on Top Layer And Pad D1-2(18.25mm,32.525mm) on Top Layer [Top Solder] Mask Sliver [0.047mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5566.225mil|Location2.X=5577.475mil|Location1.Y=5243.564mil|Location2.Y=5254.814mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5566.225mil|Location2.X=5577.475mil|Location1.Y=5243.564mil|Location2.Y=5254.814mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad R16-6(26.8mm,26.5mm) on Top Layer And Pad R16-5(25.9mm,26.5mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5597.721mil|Location2.X=5608.971mil|Location1.Y=5243.564mil|Location2.Y=5254.814mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5597.721mil|Location2.X=5608.971mil|Location1.Y=5243.564mil|Location2.Y=5254.814mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad R16-7(27.6mm,26.5mm) on Top Layer And Pad R16-6(26.8mm,26.5mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5629.217mil|Location2.X=5640.467mil|Location1.Y=5243.564mil|Location2.Y=5254.814mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5629.217mil|Location2.X=5640.467mil|Location1.Y=5243.564mil|Location2.Y=5254.814mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad R16-7(27.6mm,26.5mm) on Top Layer And Pad R16-8(28.5mm,26.5mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5629.217mil|Location2.X=5640.467mil|Location1.Y=5314.43mil|Location2.Y=5325.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5629.217mil|Location2.X=5640.467mil|Location1.Y=5314.43mil|Location2.Y=5325.68mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad R16-1(28.5mm,28.3mm) on Top Layer And Pad R16-2(27.6mm,28.3mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5597.721mil|Location2.X=5608.971mil|Location1.Y=5314.43mil|Location2.Y=5325.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5597.721mil|Location2.X=5608.971mil|Location1.Y=5314.43mil|Location2.Y=5325.68mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad R16-3(26.8mm,28.3mm) on Top Layer And Pad R16-2(27.6mm,28.3mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5566.225mil|Location2.X=5577.475mil|Location1.Y=5314.43mil|Location2.Y=5325.68mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5566.225mil|Location2.X=5577.475mil|Location1.Y=5314.43mil|Location2.Y=5325.68mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad R16-4(25.9mm,28.3mm) on Top Layer And Pad R16-3(26.8mm,28.3mm) on Top Layer [Top Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5456.657mil|Location2.X=5467.907mil|Location1.Y=6517.248mil|Location2.Y=6528.498mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5456.657mil|Location2.X=5467.907mil|Location1.Y=6517.248mil|Location2.Y=6528.498mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.103mm &lt; 0.254mm) Between Text "G|V|S" (19.7mm,57.8mm) on Top Solder And Pad XT1-G(25.42mm,58.4mm) on Multi-Layer [Top Solder] Mask Sliver [0.103mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3089.847mil|Location2.X=3101.097mil|Location1.Y=4551.402mil|Location2.Y=4562.652mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3089.847mil|Location2.X=3101.097mil|Location1.Y=4551.402mil|Location2.Y=4562.652mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.132mm &lt; 0.254mm) Between Text "JET_V" (-39.2mm,8.9mm) on Top Solder And Pad X12-1(-36.5mm,6.8mm) on Multi-Layer [Top Solder] Mask Sliver [0.132mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3156.814mil|Location2.X=3168.064mil|Location1.Y=4485.753mil|Location2.Y=4497.003mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=3156.814mil|Location2.X=3168.064mil|Location1.Y=4485.753mil|Location2.Y=4497.003mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.199mm &lt; 0.254mm) Between Text "DYN" (-33.5mm,5.2mm) on Top Solder And Pad X12-1(-36.5mm,6.8mm) on Multi-Layer [Top Solder] Mask Sliver [0.199mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5408.745mil|Location2.X=5419.995mil|Location1.Y=6806.556mil|Location2.Y=6817.806mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5408.745mil|Location2.X=5419.995mil|Location1.Y=6806.556mil|Location2.Y=6817.806mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad R2-6(22mm,66.2mm) on Bottom Layer And Pad R2-5(22.9mm,66.2mm) on Bottom Layer [Bottom Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5377.249mil|Location2.X=5388.499mil|Location1.Y=6806.556mil|Location2.Y=6817.806mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5377.249mil|Location2.X=5388.499mil|Location1.Y=6806.556mil|Location2.Y=6817.806mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad R2-7(21.2mm,66.2mm) on Bottom Layer And Pad R2-6(22mm,66.2mm) on Bottom Layer [Bottom Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5345.753mil|Location2.X=5357.003mil|Location1.Y=6806.556mil|Location2.Y=6817.806mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5345.753mil|Location2.X=5357.003mil|Location1.Y=6806.556mil|Location2.Y=6817.806mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad R2-7(21.2mm,66.2mm) on Bottom Layer And Pad R2-8(20.3mm,66.2mm) on Bottom Layer [Bottom Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5345.753mil|Location2.X=5357.003mil|Location1.Y=6877.422mil|Location2.Y=6888.672mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5345.753mil|Location2.X=5357.003mil|Location1.Y=6877.422mil|Location2.Y=6888.672mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad R2-1(20.3mm,68mm) on Bottom Layer And Pad R2-2(21.2mm,68mm) on Bottom Layer [Bottom Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5377.249mil|Location2.X=5388.499mil|Location1.Y=6877.422mil|Location2.Y=6888.672mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5377.249mil|Location2.X=5388.499mil|Location1.Y=6877.422mil|Location2.Y=6888.672mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad R2-3(22mm,68mm) on Bottom Layer And Pad R2-2(21.2mm,68mm) on Bottom Layer [Bottom Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5408.745mil|Location2.X=5419.995mil|Location1.Y=6877.422mil|Location2.Y=6888.672mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5408.745mil|Location2.X=5419.995mil|Location1.Y=6877.422mil|Location2.Y=6888.672mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.097mm &lt; 0.254mm) Between Pad R2-4(22.9mm,68mm) on Bottom Layer And Pad R2-3(22mm,68mm) on Bottom Layer [Bottom Solder] Mask Sliver [0.097mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5050.663mil|Location2.X=5061.913mil|Location1.Y=7135.344mil|Location2.Y=7146.594mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5050.663mil|Location2.X=5061.913mil|Location1.Y=7135.344mil|Location2.Y=7146.594mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.2mm &lt; 0.254mm) Between Text "nopilot.ai" (30.7mm,75.3mm) on Bottom Solder And Text "JetsonNano_v1" (28.1mm,72.6mm) on Bottom Solder [Bottom Solder] Mask Sliver [0.2mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5298.509mil|Location2.X=5309.759mil|Location1.Y=6544.802mil|Location2.Y=6556.052mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5298.509mil|Location2.X=5309.759mil|Location1.Y=6544.802mil|Location2.Y=6556.052mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.2mm &lt; 0.254mm) Between Text "PPM1" (19.8mm,59.4mm) on Top Solder And Text "G|V|S" (19.7mm,57.8mm) on Top Solder [Top Solder] Mask Sliver [0.2mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5298.509mil|Location2.X=5309.759mil|Location1.Y=6733.778mil|Location2.Y=6745.028mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5298.509mil|Location2.X=5309.759mil|Location1.Y=6733.778mil|Location2.Y=6745.028mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.2mm &lt; 0.254mm) Between Text "PPM3" (19.8mm,62.6mm) on Top Solder And Text "PPM4" (19.8mm,64.2mm) on Top Solder [Top Solder] Mask Sliver [0.2mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_odd" onmouseover="className = 'onmouseover_odd'" onmouseout="className = 'onmouseout_odd'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5298.509mil|Location2.X=5309.759mil|Location1.Y=6670.786mil|Location2.Y=6682.036mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5298.509mil|Location2.X=5309.759mil|Location1.Y=6670.786mil|Location2.Y=6682.036mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.2mm &lt; 0.254mm) Between Text "PPM2" (19.8mm,61mm) on Top Solder And Text "PPM3" (19.8mm,62.6mm) on Top Solder [Top Solder] Mask Sliver [0.2mm]</acronym></a><br></td>
+</tr>
+<tr class="onmouseout_even" onmouseover="className = 'onmouseover_even'" onmouseout="className = 'onmouseout_even'">
+<td class="column1"><a href="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5298.509mil|Location2.X=5309.759mil|Location1.Y=6607.794mil|Location2.Y=6619.044mil|Absolute=True" class="callback"><acronym title="dxpprocess://PCB:Zoom?document=E:\github\JetsonNano\JetsonBoard\JetsonNano_v1.PcbDoc;viewname=PCBEditor;Action=AREA_DYNAMICZOOM|Location1.X=5298.509mil|Location2.X=5309.759mil|Location1.Y=6607.794mil|Location2.Y=6619.044mil|Absolute=True">Minimum Solder Mask Sliver Constraint: (0.2mm &lt; 0.254mm) Between Text "PPM1" (19.8mm,59.4mm) on Top Solder And Text "PPM2" (19.8mm,61mm) on Top Solder [Top Solder] Mask Sliver [0.2mm]</acronym></a><br></td>
+</tr>
+</table></a><hr color="#EEEEEE"><a href="#top" style="font-size: 0.9em">Back to top</a><br><br></body>
+</html>
